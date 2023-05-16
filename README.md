@@ -1,7 +1,7 @@
 # VAE
-Loann CHHUM–MOXEL
-Titouan COULON
-Ibrahim OZOCAK
-Louis LEBEAUPIN
-Baptiste HAUDEBOURG
-Anne-Olympe MARICHAL
+Loann CHHUM–MOXEL<br>
+Titouan COULON<br>
+Ibrahim OZOCAK<br>
+Louis LEBEAUPIN<br>
+Baptiste HAUDEBOURG<br>
+Anne-Olympe MARICHAL<br>
