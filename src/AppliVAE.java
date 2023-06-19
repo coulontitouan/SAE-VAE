@@ -9,11 +9,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.geometry.Insets;
 
 
 
@@ -104,9 +106,10 @@ public class AppliVAE extends Application{
         ImageView imgBTDeconnexion = new ImageView("deco.png");
         ImageView imgPanier = new ImageView("panier.png");
 
-
+        
         this.logo = new ImageView("Logo_VAE.png");
-        this.barreRecherche = new TextField("Recherches");
+        this.barreRecherche = new TextField();
+        this.barreRecherche.setPromptText("Recherches ventes");                                              
         this.userNom = new Label("Mario"); // a modifier pour recupere sur le model le nom de l'utilisateur 
         this.boutonConnexion = new Button("Connexion");
         this.boutonDeconnexion = new Button("", imgBTDeconnexion);
@@ -114,12 +117,31 @@ public class AppliVAE extends Application{
         this.imgConnectee = new ImageView("profilConnect.png");
         this.imgDeco = new ImageView("profilDeco.png");
 
-        this.boutonAcceuil = new Button("Acceuil");
+        this.boutonAcceuil = new Button("Accueil");
         this.boutonCategorie = new Button("Catégories");
         this.boutonVenteSuivi = new Button("Ventes Suivi");
         this.boutonUtilisateurVente = new Button("Vos ventes");
         this.boutonAPropos = new Button("A propos du service");
         
+
+        // retaillage d'image
+        this.imgConnectee.setFitHeight(50);
+        this.imgConnectee.setFitWidth(50);
+
+        this.imgDeco.setFitHeight(50);
+        this.imgDeco.setFitWidth(50);
+
+        this.logo.setFitHeight(70);
+        this.logo.setPreserveRatio(true);
+
+        // stylisation des boutons (à améliorer)
+        this.boutonAPropos.setStyle("-fx-background-color: transparent; -fx-text-fill: white;");
+        this.boutonAcceuil.setStyle("-fx-background-color: transparent; -fx-text-fill: white;");
+        this.boutonCategorie.setStyle("-fx-background-color: transparent; -fx-text-fill: white;");
+        this.boutonVenteSuivi.setStyle("-fx-background-color: transparent; -fx-text-fill: white;");
+        this.boutonUtilisateurVente.setStyle("-fx-background-color: transparent; -fx-text-fill: white;");
+        this.boutonConnexion.setStyle("-fx-background-color: transparent;");
+        this.boutonDeconnexion.setStyle("-fx-background-color: transparent;");
 
         
 
@@ -145,8 +167,7 @@ public class AppliVAE extends Application{
         top.setCenter(this.barreRecherche);
 
 
-        //down.getChildren().addAll(this.boutonAcceuil, this.boutonCategorie, this.boutonVenteSuivi, this.boutonAPropos);
-
+        
         
         // A MODIFIER QUAND MODELE FINI !!! (doit interroger le modele pour savoir si l'utilisateur est connecter)
         if(estConnectee){
@@ -155,9 +176,17 @@ public class AppliVAE extends Application{
         }
         else{
             connexion.getChildren().addAll(this.boutonConnexion, this.imgDeco);
-            down.getChildren().addAll(this.boutonAcceuil, this.boutonCategorie, this.boutonVenteSuivi, this.boutonAPropos);
+            down.getChildren().addAll(this.boutonAcceuil, this.boutonCategorie, this.boutonVenteSuivi, this.boutonUtilisateurVente, this.boutonAPropos);
         }
 
+        
+
+        connexion.setPadding(new Insets(10));
+        connexion.setAlignment(Pos.CENTER);
+
+        down.setStyle("-fx-background-color: #005C83;");
+        down.setPadding(new Insets(10));
+        
 
         return pane;
         
