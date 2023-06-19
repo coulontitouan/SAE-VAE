@@ -129,6 +129,12 @@ public class AppliVAE extends Application{
         this.boutonVenteSuivi = new Button("Ventes Suivi");
         this.boutonUtilisateurVente = new Button("Vos ventes");
         this.boutonAPropos = new Button("A propos du service");
+
+        this.boutonAcceuil.setOnAction(new ControllerPage(this));
+        this.boutonCategorie.setOnAction(new ControllerPage(this));
+        this.boutonVenteSuivi.setOnAction(new ControllerPage(this));
+        this.boutonUtilisateurVente.setOnAction(new ControllerPage(this));
+        this.boutonAPropos.setOnAction(new ControllerPage(this));
         
 
         // retaillage d'image

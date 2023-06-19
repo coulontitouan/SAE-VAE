@@ -14,23 +14,23 @@ public class ControllerPage implements EventHandler<ActionEvent> {
     public void handle(ActionEvent actionEvent) {
         Button button = (Button) (actionEvent.getSource());
         
-        if(button.getText().equals("Accueil")){
+        if(button.getText().contains("Accueil")){
             this.appli.modeAccueil();
         }
 
-        if(button.getText().equals("Catégories")){
+        if(button.getText().contains("Catégories")){
             this.appli.modeCategorie();
         }
 
-        if(button.getText().equals("Ventes Suivi")){
+        if(button.getText().contains("Ventes Suivi")){
             this.appli.modeVentes();
         }
 
-        if(button.getText().equals("Vos ventes")){
+        if(button.getText().contains("Vos ventes")){
             this.appli.modeConsultation();
         }
 
-        if(button.getText().equals("A propos du service")){
+        if(button.getText().contains("A propos du service")){
             this.appli.modeCredit();
         }
     }
