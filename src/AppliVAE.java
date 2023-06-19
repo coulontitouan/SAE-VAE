@@ -7,6 +7,7 @@ import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
@@ -101,11 +102,17 @@ public class AppliVAE extends Application{
      */
     private Label userNom;
 
+    /**
+     * le panel Central qui pourra être modifié selon le mode
+     */
+    private BorderPane panelCentral;
+
     @Override
     public void init() {
         ImageView imgBTDeconnexion = new ImageView("deco.png");
         ImageView imgPanier = new ImageView("panier.png");
 
+        this.panelCentral = new BorderPane();
         
         this.logo = new ImageView("Logo_VAE.png");
         this.barreRecherche = new TextField();
@@ -135,6 +142,7 @@ public class AppliVAE extends Application{
         this.logo.setPreserveRatio(true);
 
         // stylisation des boutons (à améliorer)
+        
         this.boutonAPropos.setStyle("-fx-background-color: transparent; -fx-text-fill: white;");
         this.boutonAcceuil.setStyle("-fx-background-color: transparent; -fx-text-fill: white;");
         this.boutonCategorie.setStyle("-fx-background-color: transparent; -fx-text-fill: white;");
@@ -142,6 +150,7 @@ public class AppliVAE extends Application{
         this.boutonUtilisateurVente.setStyle("-fx-background-color: transparent; -fx-text-fill: white;");
         this.boutonConnexion.setStyle("-fx-background-color: transparent;");
         this.boutonDeconnexion.setStyle("-fx-background-color: transparent;");
+        
 
         
 
@@ -150,6 +159,7 @@ public class AppliVAE extends Application{
     private Scene laScene(){
         BorderPane fenetre = new BorderPane();
         fenetre.setTop(this.baniere());
+        fenetre.setCenter(this.panelCentral);
         return new Scene(fenetre, 800, 1000);
     }
 
@@ -166,8 +176,6 @@ public class AppliVAE extends Application{
         top.setRight(connexion);
         top.setCenter(this.barreRecherche);
 
-
-        
         
         // A MODIFIER QUAND MODELE FINI !!! (doit interroger le modele pour savoir si l'utilisateur est connecter)
         if(estConnectee){
@@ -192,11 +200,104 @@ public class AppliVAE extends Application{
         
     }
 
+    public void modeAccueil(){
+        this.panelCentral.setCenter(this.fenetreAccueil());
+    }
+
+    public void modeCategorie(){
+        this.panelCentral.setCenter(this.fenetreCategorie());
+    }
+    public void modeVentes(){
+        this.panelCentral.setCenter(this.fenetreVentes());
+    }
+
+    public void modeConsultation(){
+        this.panelCentral.setCenter(this.fenetreConsultation());
+    }
+
+    public void modeCredit(){
+        this.panelCentral.setCenter(this.fenetreCredit());
+    }
+
+
+    //partie Louis (à editer)
+    public Pane fenetreAccueil(){
+        BorderPane res = new BorderPane();
+        VBox gauche = new VBox();
+        HBox premier = new HBox();
+        HBox second = new HBox();
+        VBox premierdesc = new VBox();
+        VBox seconddesc = new VBox();
+        Image imgobj1 = new Image("profilDeco.png", 200, 200, false, false, false);
+        Image imgobj2 = new Image("profilDeco.png", 200, 200, false, false, false);
+        Label titre = new Label("Meilleurs ventes en cours");
+        Label obj1 = new Label("Lumpus Corpes");
+        Label obj2 = new Label("Lumpus Corpes");
+        HBox ench1 = new HBox();
+        HBox ench2 = new HBox();
+        Image note1 = new Image("jauge_5.png", 300, 100, false, false, false);
+        Image note2 = new Image("jauge_4.png", 300, 100, false, false, false);
+        Label prix1 = new Label("250 €");
+        Label prix2 = new Label("126 €");
+        Button encher1 = new Button("Enchérir");
+        // ench1.setStyle("-fx-background-color: white");
+        Button encher2 = new Button("Enchérir");
+        // ench2.setStyle("-fx-background-color: white");
+        Label desc1 = new Label("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed \n do eiusmod tempor incididunt ut labore et dolore magna aliqua. \n Ut enim ad minim veniam, quis nostrud exercitation ullamco \n laboris nisi ut aliquip ex ea commodo consequat.");
+        Label desc2 = new Label("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed \n do eiusmod tempor incididunt ut labore et dolore magna aliqua. \n Ut enim ad minim veniam, quis nostrud exercitation ullamco \n laboris nisi ut aliquip ex ea commodo consequat.");
+        ench1.getChildren().addAll(prix1, encher1);
+        ench2.getChildren().addAll(prix2, encher2);
+        titre.setStyle("-fx-font-size: 40px;");
+        obj1.setStyle("-fx-font-size: 30px;");
+        obj2.setStyle("-fx-font-size: 30px;");
+        premierdesc.getChildren().addAll(obj1, ench1, desc1, new ImageView(note1));
+        seconddesc.getChildren().addAll(obj2, ench2, desc2, new ImageView(note2));
+        premier.getChildren().addAll(new ImageView(imgobj1), premierdesc);
+        second.getChildren().addAll(new ImageView(imgobj2), seconddesc);
+        gauche.getChildren().addAll(titre, premier, second);
+
+
+        GridPane droite = new GridPane();
+        HBox principal = new HBox();
+
+        droite.setStyle("-fx-background-color: white");
+        Label filtre= new Label("Filtre");
+        filtre.setStyle("-fx-font-size: 40px;");
+        principal.getChildren().addAll(filtre);
+        droite.getChildren().add(principal);
+
+        res.setRight(droite);
+        res.setLeft(gauche);
+        return res;
+    }
+
+    public Pane fenetreCategorie(){
+        Pane pane = new Pane();
+        return pane;
+    }
+
+    public Pane fenetreVentes(){
+        Pane pane = new Pane();
+        return pane;
+    }
+
+    public Pane fenetreConsultation(){
+        Pane pane = new Pane();
+        return pane;
+    }
+
+    public Pane fenetreCredit(){
+        Pane pane = new Pane();
+        return pane;
+    }
+
+
 
     @Override
     public void start(Stage stage) {
         stage.setTitle("VAE - Ventes, Achats, Enchères");
         stage.setScene(this.laScene());
+        this.modeAccueil();
         stage.show();
     }
 
