@@ -12,9 +12,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.geometry.Insets;
 
@@ -166,7 +170,7 @@ public class AppliVAE extends Application{
         BorderPane fenetre = new BorderPane();
         fenetre.setTop(this.baniere());
         fenetre.setCenter(this.panelCentral);
-        return new Scene(fenetre, 800, 1000);
+        return new Scene(fenetre, 1900, 1080);
     }
 
     private Pane baniere(){
@@ -283,7 +287,142 @@ public class AppliVAE extends Application{
     }
 
     public Pane fenetreVentes(){
-        Pane pane = new Pane();
+        /* 
+        BorderPane pane = new BorderPane();
+
+        VBox center = new VBox();
+        VBox left = new VBox();
+
+        pane.setCenter(center);
+        pane.setLeft(left);
+
+        Label intituler = new Label("Lumpus Corpes"); // a modifier pour récupéré le nom de l'objet
+        BorderPane article = new BorderPane();
+        ImageView imageArticle = new ImageView("Logo_VAE.png"); // a modifier pour modifier l'image mis en ligne
+        imageArticle.setFitWidth(70);
+        imageArticle.setPreserveRatio(true);
+        VBox contenu = new VBox();
+
+        article.setRight(imageArticle);
+
+        ImageView jauge = new ImageView();
+        HBox infoPrix = new HBox();
+
+        Label prixinit = new Label("prix initial:");
+        prixinit.setStyle("-fx-background-color: white; -fx-background-radius: 15px; -fx-font-weight: bold;");
+        prixinit.setPadding(new Insets(5));
+
+        Label prix = new Label("230€"); //a modifier pour récupéré le prix initial avant enchère
+        prix.setStyle("-fx-background-color: #005C83; -fx-text-fill: white; -fx-font-weight: bold;-fx-background-radius: 15px;");
+        prix.setPadding(new Insets(5));
+
+        Button retirerVente = new Button("Annuler");
+
+        if(estAdmin){
+           infoPrix.getChildren().addAll(prixinit, prix, retirerVente);
+        }
+        else{
+            infoPrix.getChildren().addAll(prixinit, prix);
+        }
+
+        Text description = new Text("Harum trium sententiarum nulli prorsus assentior. Nec \nnim illa prima vera est, \nt, quem ad modum in se quisque sit, \nic in amicum sit animatus");
+
+        
+        HBox miseVentePar = new HBox();
+        miseVentePar.setAlignment(Pos.CENTER_LEFT);
+        miseVentePar.setPadding(new Insets(10));
+        miseVentePar.setSpacing(15.0);
+
+        
+        Circle avatarVendeur = new Circle(25);
+        Image imgAvatar = new Image("profilConnect.png");
+        ImagePattern pattern = new ImagePattern(imgAvatar);
+        avatarVendeur.setFill(pattern);
+
+        Label infoVendeur = new Label("Mise en vente par Mario"); //A modifier pour recupéré le nom du propriétairede l'objet
+        infoVendeur.setStyle("-fx-text-fill: #005C83;");
+
+        miseVentePar.getChildren().addAll(avatarVendeur, infoVendeur);
+
+        contenu.getChildren().addAll(jauge, infoPrix, description, miseVentePar);
+        article.setCenter(contenu);
+
+        center.getChildren().addAll(intituler, article);
+
+
+        return pane;
+        */
+
+        BorderPane pane = new BorderPane();
+        VBox center = new VBox();
+        VBox left = new VBox();
+        pane.setCenter(center);
+        pane.setLeft(left);
+
+        //Titre de l'objet-article
+        Label intituler = new Label("Lumpus Corpes"); // a modifier pour récupéré le nom de l'objet
+        intituler.setFont(Font.font("Arial", FontWeight.MEDIUM, 30));
+        intituler.setPadding(new Insets(10));
+
+        //l'article avec d'un coté l'image et de l'autre le contenu
+        BorderPane article = new BorderPane();
+
+        //Image de l'article en vente
+        ImageView imgArticle = new ImageView("profilConnect.png");
+        imgArticle.setFitWidth(150);
+        imgArticle.setPreserveRatio(true);
+
+        //Contenu de l'article
+        VBox contenu = new VBox();
+
+        //Jauge (à modifier)
+        ImageView jauge = new ImageView("jauge_4.png");
+
+        //Prix
+        HBox infoPrix = new HBox();
+        Label prixinit = new Label("prix initial:");
+        prixinit.setStyle("-fx-background-color: white; -fx-background-radius: 15px; -fx-font-weight: bold;");
+        prixinit.setPadding(new Insets(5));
+        Label prix = new Label("230€"); //a modifier pour récupéré le prix initial avant enchère
+        prix.setStyle("-fx-background-color: #005C83; -fx-text-fill: white; -fx-font-weight: bold;-fx-background-radius: 15px;");
+        prix.setPadding(new Insets(5));
+        Button annuler = new Button("Annuler");
+        annuler.setStyle("-fx-background-color: red; -fx-text-fill: white; -fx-font-weight: bold;-fx-background-radius: 15px;");
+        annuler.setPadding(new Insets(5));
+
+        infoPrix.getChildren().addAll(prixinit, prix, annuler);
+        infoPrix.setSpacing(10);
+
+        //Description
+        Text description = new Text("Harum trium sententiarum nulli prorsus assentior. Nec \nnim illa prima vera est, \nt, quem ad modum in se quisque sit, \nic in amicum sit animatus");
+
+        //Mise en vente par un gens
+        HBox miseVentePar = new HBox();
+        miseVentePar.setAlignment(Pos.CENTER_LEFT);
+        miseVentePar.setPadding(new Insets(10));
+        miseVentePar.setSpacing(15.0);
+
+        //avatar du vendeur
+        Circle avatarVendeur = new Circle(25);
+        Image imgAvatar = new Image("profilConnect.png");
+        ImagePattern pattern = new ImagePattern(imgAvatar);
+        avatarVendeur.setFill(pattern);
+
+        //Text à propos du vendeur
+        Label infoVendeur = new Label("Mise en vente par Mario"); //A modifier pour recupéré le nom du propriétaire de l'objet
+        infoVendeur.setStyle("-fx-text-fill: #005C83;");
+        miseVentePar.getChildren().addAll(avatarVendeur, infoVendeur);
+
+
+        
+        contenu.getChildren().addAll(jauge, infoPrix, description, miseVentePar);
+        contenu.setPadding(new Insets(0, 0, 0, 30));
+        contenu.setSpacing(10);
+        article.setLeft(imgArticle);
+        article.setCenter(contenu);
+        article.setPadding(new Insets(40));
+        center.getChildren().addAll(intituler, article);
+
         return pane;
     }
 
@@ -303,7 +442,7 @@ public class AppliVAE extends Application{
     public void start(Stage stage) {
         stage.setTitle("VAE - Ventes, Achats, Enchères");
         stage.setScene(this.laScene());
-        this.modeAccueil();
+        this.modeVentes();
         stage.show();
     }
 
