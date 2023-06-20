@@ -7,6 +7,7 @@ import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -287,77 +288,12 @@ public class AppliVAE extends Application{
     }
 
     public Pane fenetreVentes(){
-        /* 
-        BorderPane pane = new BorderPane();
-
-        VBox center = new VBox();
-        VBox left = new VBox();
-
-        pane.setCenter(center);
-        pane.setLeft(left);
-
-        Label intituler = new Label("Lumpus Corpes"); // a modifier pour récupéré le nom de l'objet
-        BorderPane article = new BorderPane();
-        ImageView imageArticle = new ImageView("Logo_VAE.png"); // a modifier pour modifier l'image mis en ligne
-        imageArticle.setFitWidth(70);
-        imageArticle.setPreserveRatio(true);
-        VBox contenu = new VBox();
-
-        article.setRight(imageArticle);
-
-        ImageView jauge = new ImageView();
-        HBox infoPrix = new HBox();
-
-        Label prixinit = new Label("prix initial:");
-        prixinit.setStyle("-fx-background-color: white; -fx-background-radius: 15px; -fx-font-weight: bold;");
-        prixinit.setPadding(new Insets(5));
-
-        Label prix = new Label("230€"); //a modifier pour récupéré le prix initial avant enchère
-        prix.setStyle("-fx-background-color: #005C83; -fx-text-fill: white; -fx-font-weight: bold;-fx-background-radius: 15px;");
-        prix.setPadding(new Insets(5));
-
-        Button retirerVente = new Button("Annuler");
-
-        if(estAdmin){
-           infoPrix.getChildren().addAll(prixinit, prix, retirerVente);
-        }
-        else{
-            infoPrix.getChildren().addAll(prixinit, prix);
-        }
-
-        Text description = new Text("Harum trium sententiarum nulli prorsus assentior. Nec \nnim illa prima vera est, \nt, quem ad modum in se quisque sit, \nic in amicum sit animatus");
-
-        
-        HBox miseVentePar = new HBox();
-        miseVentePar.setAlignment(Pos.CENTER_LEFT);
-        miseVentePar.setPadding(new Insets(10));
-        miseVentePar.setSpacing(15.0);
-
-        
-        Circle avatarVendeur = new Circle(25);
-        Image imgAvatar = new Image("profilConnect.png");
-        ImagePattern pattern = new ImagePattern(imgAvatar);
-        avatarVendeur.setFill(pattern);
-
-        Label infoVendeur = new Label("Mise en vente par Mario"); //A modifier pour recupéré le nom du propriétairede l'objet
-        infoVendeur.setStyle("-fx-text-fill: #005C83;");
-
-        miseVentePar.getChildren().addAll(avatarVendeur, infoVendeur);
-
-        contenu.getChildren().addAll(jauge, infoPrix, description, miseVentePar);
-        article.setCenter(contenu);
-
-        center.getChildren().addAll(intituler, article);
-
-
-        return pane;
-        */
 
         BorderPane pane = new BorderPane();
         VBox center = new VBox();
         VBox left = new VBox();
         pane.setCenter(center);
-        pane.setLeft(left);
+        pane.setRight(left);
 
         //Titre de l'objet-article
         Label intituler = new Label("Lumpus Corpes"); // a modifier pour récupéré le nom de l'objet
@@ -413,7 +349,59 @@ public class AppliVAE extends Application{
         infoVendeur.setStyle("-fx-text-fill: #005C83;");
         miseVentePar.getChildren().addAll(avatarVendeur, infoVendeur);
 
+        //Titre Enchère
+        Label titreEnchere = new Label("Meilleurs Enchères"); // a modifier pour récupéré le nom de l'objet
+        titreEnchere.setFont(Font.font("Arial", FontWeight.MEDIUM, 30));
+        titreEnchere.setPadding(new Insets(10));
 
+        //Ensemble des propositions
+        HBox lesProposition = new HBox();
+
+        //Une proposition à répéter avec une MaJAffichge
+        GridPane proposition = new GridPane();
+        proposition.setStyle("-fx-background-color: white; -fx-background-radius: 15px;");
+        proposition.setPadding(new Insets(5));
+
+        //avartar proposition (à modifier pour ajouter les images d'avatar different)
+        Circle avatarAcheteur = new Circle(25);
+        avatarAcheteur.setFill(pattern);
+        proposition.add(avatarAcheteur, 0, 0);
+
+        //Nom acheteur
+        Text nomAcheteur = new Text("Ulti"); //A changer pour recupérer le nom des personnes ayant mis une enchère
+        proposition.add(nomAcheteur, 1, 0);
+
+        //recommandation
+        Label recommander = new Label("Recommandée");
+        recommander.setStyle("-fx-text-fill: #31D455;");
+        proposition.add(recommander, 2, 0);
+
+        //montant
+        Label montant = new Label("1250€");
+        montant.setStyle("-fx-background-color: #D9D9D9; -fx-font-weight: bold;-fx-background-radius: 15px;");
+        montant.setPadding(new Insets(5));
+        proposition.add(montant, 3, 0);
+
+        //Validée (reservé au personne ayant mis en ligne l'article)
+        Button valider = new Button("valider");
+        valider.setStyle("-fx-background-color: #31D455; -fx-text-fill: white; -fx-font-weight: bold;-fx-background-radius: 15px;");
+        valider.setPadding(new Insets(5));
+        proposition.add(valider, 4, 0);
+
+
+        //taillage de proposition
+        proposition.getColumnConstraints().add(new ColumnConstraints(50)); // column 0 is 100 wide
+        proposition.getColumnConstraints().add(new ColumnConstraints(100));
+        proposition.getColumnConstraints().add(new ColumnConstraints(200));
+        proposition.getColumnConstraints().add(new ColumnConstraints(75));
+        proposition.getColumnConstraints().add(new ColumnConstraints(75));
+   
+        
+
+
+        proposition.setHgap(10);
+
+        lesProposition.getChildren().addAll(proposition);
         
         contenu.getChildren().addAll(jauge, infoPrix, description, miseVentePar);
         contenu.setPadding(new Insets(0, 0, 0, 30));
@@ -421,7 +409,22 @@ public class AppliVAE extends Application{
         article.setLeft(imgArticle);
         article.setCenter(contenu);
         article.setPadding(new Insets(40));
-        center.getChildren().addAll(intituler, article);
+
+        //zone concernant l'enchère
+        HBox pageEnchere = new HBox();
+        pageEnchere.setStyle("-fx-background-color: white; -fx-background-radius: 15px;");
+
+        //Titre
+        Label titreAchat = new Label("Proposer un prix");
+    
+
+
+
+
+
+        pageEnchere.getChildren().addAll(titreAchat);
+        center.getChildren().addAll(intituler, article, titreEnchere, lesProposition);
+        left.getChildren().addAll(pageEnchere);
 
         return pane;
     }
