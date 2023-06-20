@@ -341,6 +341,26 @@ public class Accueil extends Application {
         return res;
     }
 
+    public void modeDeconnecte(){
+
+    }
+
+    public void modeConnecte(){
+
+    }
+
+    public void modeEnchere(){
+
+    }
+
+    public void modeVentesSuivies(){
+
+    }
+
+    public void modeVentesVendeur(){
+
+    }
+
 
     /**
      * créer le graphe de scène et lance le jeu
