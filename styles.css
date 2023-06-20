@@ -1,0 +1,47 @@
+.placementBoutonHeader{
+    -fx-background-color: #005C83;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.boutonDuHeader:hover{
+    -fx-border-color: white;
+    -fx-padding-top: 10px;
+    -fx-padding-bottom: 10px;
+}
+
+.boutonDuHeader{
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-border-color: transparent;
+}
+
+.reset:hover{
+    -fx-background-color: #cdccd1;
+    -fx-background-radius: 10px;
+}
+
+
+.reset{
+    -fx-border-color: transparent; 
+    -fx-background-color: transparent; 
+    -fx-background-insets: 0; 
+    -fx-text-fill: #10668a; 
+    -fx-background-radius: 0; 
+}
+
+
+.encher:hover{
+    -fx-border-color: black;
+    -fx-border-radius: 10px;
+}
+
+.encher{
+    -fx-border-color: transparent; 
+    -fx-background-color: white;
+    -fx-text-fill: black; 
+    -fx-font-size: 30px; 
+    -fx-background-radius: 10px;
+}
+
