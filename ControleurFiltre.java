@@ -2,8 +2,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.ButtonType;
 import java.util.Optional;
-import java.util.Locale.Category;
-
 import javafx.scene.control.Button;
 
 /**
@@ -13,11 +11,11 @@ public class ControleurFiltre implements EventHandler<ActionEvent> {
     /**
      * modèle de l'application
      */
-    private ModeleVAE appliVAE;
+    private ModeleVAE modeleVAE;
     /**
      * vue de l'application
      **/
-    private AppliVAE vueVAE;
+    private AppliVAE appliVAE;
 
     /**
      * @param modeleVAE modèle de l'application

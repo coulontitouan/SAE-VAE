@@ -2,8 +2,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.ButtonType;
 import java.util.Optional;
-import java.util.Locale.Category;
-
 import javafx.scene.control.Button;
 
 /**
@@ -38,6 +36,5 @@ public class ControleurEncherir implements EventHandler<ActionEvent> {
         if (b.getText().equals("Confirmer")){
             this.modeleVAE.encherir(this.vueVAE.getObjet(),this.vueVAE.getPrixEnchere());
         }
-        
     }
 }
