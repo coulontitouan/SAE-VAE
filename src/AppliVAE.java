@@ -18,6 +18,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -171,7 +172,9 @@ public class AppliVAE extends Application{
         BorderPane fenetre = new BorderPane();
         fenetre.setTop(this.baniere());
         fenetre.setCenter(this.panelCentral);
-        return new Scene(fenetre, 1900, 1080);
+        Scene scene = new Scene(fenetre, 1220, 1080);
+        
+        return scene;
     }
 
     private Pane baniere(){
@@ -368,7 +371,7 @@ public class AppliVAE extends Application{
         proposition.add(avatarAcheteur, 0, 0);
 
         //Nom acheteur
-        Text nomAcheteur = new Text("Ulti"); //A changer pour recupérer le nom des personnes ayant mis une enchère
+        Text nomAcheteur = new Text("Chao"); //A changer pour recupérer le nom des personnes ayant mis une enchère
         proposition.add(nomAcheteur, 1, 0);
 
         //recommandation
@@ -411,22 +414,56 @@ public class AppliVAE extends Application{
         article.setPadding(new Insets(40));
 
         //zone concernant l'enchère
-        HBox pageEnchere = new HBox();
+        VBox pageEnchere = new VBox();
         pageEnchere.setStyle("-fx-background-color: white; -fx-background-radius: 15px;");
+        pageEnchere.setPadding(new Insets(25));
 
         //Titre
         Label titreAchat = new Label("Proposer un prix");
+        titreAchat.setFont(Font.font("Arial", FontWeight.MEDIUM, 30));
+        titreAchat.setPadding(new Insets(0, 50, 10, 0));
+
+        //Rentrer un prix
+        HBox prixEnchere = new HBox();
+
+        //Textfield pour entrer une valeur
+        TextField tfPrix = new TextField();
+        tfPrix.setPromptText("230"); //a modifier pour s'adapter au prix minimal
+
+        //Valeur monetaire
+        Label typeMoney = new Label("€"); //a modifier eventuellement pour changer le type de money (ex: euro en dollard)
+        typeMoney.setFont(Font.font("Arial", FontWeight.MEDIUM, 20));
+        typeMoney.setPadding(new Insets(0, 0, 0, 10));
     
+        //CheckBox pour valider qu'on a plus de 18 ans (doit empecher la validiter de l'achat tant que pas cocher)
+        CheckBox valideAge = new CheckBox("J’ai lu et accepté les règles de\n confidencialité et confirme avoir\n plus de 18 ans.");
+        valideAge.setPadding(new Insets(10, 10, 50, 10));
+        
+        //Bouton valider l'enchère
+        Button valideAchat = new Button("Confirmer");
+        valideAchat.setStyle("-fx-background-color: #31D455; -fx-text-fill: white; -fx-font-weight: bold;-fx-background-radius: 15px;");
+        valideAchat.setAlignment(Pos.CENTER_RIGHT);
 
 
+        prixEnchere.getChildren().addAll(tfPrix, typeMoney);
+        pageEnchere.getChildren().addAll(titreAchat, prixEnchere, valideAge, valideAchat);
+
+        //pageGraphique (à affichier en mode connecter et si l'objet appartient à la personne)
+        HBox pageGraph = new HBox();
+        Label titreFlowChart = new Label("Evolution des prix");
 
 
-
-        pageEnchere.getChildren().addAll(titreAchat);
+        pageGraph.getChildren().addAll(titreFlowChart);
         center.getChildren().addAll(intituler, article, titreEnchere, lesProposition);
-        left.getChildren().addAll(pageEnchere);
+        left.getChildren().addAll(pageEnchere, pageGraph);
+        left.setPadding(new Insets(20));
 
         return pane;
+    }
+
+    public Pane leGraphe(){
+
+        return new Pane();
     }
 
     public Pane fenetreConsultation(){
