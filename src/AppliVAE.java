@@ -23,6 +23,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.geometry.Insets;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 
 
 
@@ -449,11 +453,11 @@ public class AppliVAE extends Application{
         pageEnchere.getChildren().addAll(titreAchat, prixEnchere, valideAge, valideAchat);
 
         //pageGraphique (à affichier en mode connecter et si l'objet appartient à la personne)
-        HBox pageGraph = new HBox();
+        VBox pageGraph = new VBox();
         Label titreFlowChart = new Label("Evolution des prix");
 
 
-        pageGraph.getChildren().addAll(titreFlowChart);
+        pageGraph.getChildren().addAll(titreFlowChart, this.leGraphe());
         center.getChildren().addAll(intituler, article, titreEnchere, lesProposition);
         left.getChildren().addAll(pageEnchere, pageGraph);
         left.setPadding(new Insets(20));
@@ -461,9 +465,19 @@ public class AppliVAE extends Application{
         return pane;
     }
 
-    public Pane leGraphe(){
+    private Pane leGraphe(){
+        HBox pane = new HBox();
+        final NumberAxis xAxis = new NumberAxis();
+        final NumberAxis yAxis = new NumberAxis();
+        LineChart<Number,Number> graph = new LineChart<Number,Number>(xAxis,yAxis);
+        XYChart.Series series1 = new XYChart.Series();
+        series1.getData().add(new XYChart.Data(0, 230));
+        series1.getData().add(new XYChart.Data(1, 1250));
+        graph.getData().addAll(series1);
+        pane.getChildren().addAll(graph);
+        pane.setStyle("fx-background-color: white; -fx-background-radius: 15px;");
 
-        return new Pane();
+        return pane;
     }
 
     public Pane fenetreConsultation(){
@@ -473,6 +487,7 @@ public class AppliVAE extends Application{
 
     public Pane fenetreCredit(){
         Pane pane = new Pane();
+
         return pane;
     }
 
