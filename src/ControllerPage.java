@@ -31,7 +31,7 @@ public class ControllerPage implements EventHandler<ActionEvent> {
         }
 
         if(button.getText().contains("A propos du service")){
-            this.appli.modeCredit();
+            this.appli.popUpAPropos().showAndWait();
         }
     }
 }
