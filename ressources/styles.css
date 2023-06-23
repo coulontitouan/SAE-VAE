@@ -1,0 +1,113 @@
+.bRecherche:hover{
+    -fx-background-color:#2c8bc3 ;
+}
+
+.bRecherche{
+    -fx-background-color:#10668a ;
+    -fx-text-fill: white;
+}
+
+.identification:hover{
+    -fx-background-color:#2c8bc3;
+}
+
+.identification{
+    -fx-background-color: #10668a;
+    -fx-border-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 15px; 
+}
+
+.bHautADroite:hover{
+    -fx-background-color: #cdccd1;
+}
+
+.bHautADroite{
+    -fx-background-color:transparent;
+    -fx-border-color: transparent;
+}
+
+.boutonDuHeader:hover{
+    -fx-border-color: white;
+    -fx-padding-top: 10px;
+    -fx-padding-bottom: 10px;
+}
+
+.boutonDuHeader{
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-border-color: transparent;
+}
+
+.applique:hover{
+    -fx-background-color:#2c8bc3 ;
+    -fx-background-radius: 10px;
+}
+
+.applique{
+    -fx-background-color: #10668a;
+    -fx-text-fill: #FFFFFF;
+    -fx-background-radius: 10px;
+}
+
+.reset:hover{
+    -fx-background-color: #cdccd1;
+    -fx-background-radius: 10px;
+}
+
+
+.reset{
+    -fx-border-color: transparent; 
+    -fx-background-color: transparent; 
+    -fx-background-insets: 0; 
+    -fx-text-fill: #10668a; 
+    -fx-background-radius: 0; 
+}
+
+
+.encher:hover{
+    -fx-border-color: #10668a;
+    -fx-border-radius: 8px;
+}
+
+.encher{
+    -fx-border-color: black; 
+    -fx-background-color: white;
+    -fx-text-fill: black; 
+    -fx-font-size: 30px; 
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+}
+
+.bConnexion:hover{
+    -fx-background-color:#2c8bc3;
+}
+
+.bConnexion{
+    -fx-background-color: #10668a;
+    -fx-text-fill: #FFFFFF;
+    -fx-border-radius: 15px;
+}
+
+.bSinscrire:hover{
+    -fx-background-color:#2c8bc3;
+}
+
+.bSinscrire{
+    -fx-background-color: #10668a;
+    -fx-text-fill: #FFFFFF;
+    -fx-border-radius: 15px;
+}
+
+.bInscription:hover{
+    -fx-background-color:#2c8bc3;
+}
+
+.bInscription{
+    -fx-background-color: #10668a;
+    -fx-text-fill: #FFFFFF;
+    -fx-border-radius: 15px;
+}
+
+
+
