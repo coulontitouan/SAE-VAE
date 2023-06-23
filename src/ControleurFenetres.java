@@ -48,5 +48,9 @@ public class ControleurFenetres implements EventHandler<ActionEvent> {
         if (b.getText().equals("Enchérir")){
             this.vueVAE.modeEnchere();
         }
+        if (b.getText().equals("Administrateur")){
+            System.out.println("a");
+            this.vueVAE.modeAdmin();
+        }
     }
 }

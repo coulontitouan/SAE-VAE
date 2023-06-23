@@ -360,6 +360,54 @@ public class Requete {
         return lesObjets;
     }
 
+    public static List<Objet> obtenirParUtilisateur(int idUtilisateur){
+
+        List<Objet> lesObjets = new ArrayList<>();
+        try{  
+            st = laConnexion.createStatement();
+            st.executeQuery("CREATE OR REPLACE VIEW MONTANT_ENCHERE_MAX as SELECT idve, montant FROM ENCHERIR where montant = (SELECT MAX(montant) FROM ENCHERIR E WHERE ENCHERIR.idve = E.idve);");
+            
+            ResultSet resultatObjetEnVentes = st.executeQuery(" SELECT idob,nomob, descriptionob, nomcat, idut, prixbase, imgph FROM OBJET natural join VENTE natural join CATEGORIE natural join PHOTO where idst = 2 and idut = '"+idUtilisateur +"'ORDER BY debutve;");
+            
+            while ( resultatObjetEnVentes.next()){
+                ResultSet resultatMontantEnchere = st.executeQuery(" SELECT montant FROM VENTE natural join MONTANT_ENCHERE_MAX where idob = "+resultatObjetEnVentes.getInt(1)+";");
+
+                if (resultatMontantEnchere.next()){
+                            lesObjets.add(new Objet(resultatObjetEnVentes.getInt(1),resultatObjetEnVentes.getString(2),resultatObjetEnVentes.getString(3), Requete.decodeImage(resultatObjetEnVentes.getBlob(7)),resultatMontantEnchere.getDouble(1),new Categorie(resultatObjetEnVentes.getString(4)),4,resultatObjetEnVentes.getInt(5)));
+
+                }else{
+                        lesObjets.add(new Objet(resultatObjetEnVentes.getInt(1),resultatObjetEnVentes.getString(2),resultatObjetEnVentes.getString(3), Requete.decodeImage(resultatObjetEnVentes.getBlob(7)),resultatObjetEnVentes.getInt(6),new Categorie(resultatObjetEnVentes.getString(4)),4,resultatObjetEnVentes.getInt(5)));
+                }
+            }
+        }catch(Exception ex){
+            System.out.println(ex);
+        }
+        return lesObjets;
+    }
+
+    public static List<Utilisateur> obtenirUtilisateurs(){
+        List<Utilisateur> lesUtilisateurs = new ArrayList<>();
+        try{  
+            st = laConnexion.createStatement();
+            
+            ResultSet resultatUtilisateur = st.executeQuery("SELECT idut, pseudout, activeut nom FROM UTILISATEUR");
+            
+            while ( resultatUtilisateur.next()){
+                ResultSet resultatUtilisateurVente = st.executeQuery("SELECT COUNT(idve) FROM UTILISATEUR natural left join OBJET natural left join VENTE where idut = "+resultatUtilisateur.getInt(1) +";");
+                if (resultatUtilisateurVente.next()){
+                    if (resultatUtilisateur.getString(3).equals("O")) {
+                
+                        lesUtilisateurs.add(new Utilisateur(resultatUtilisateur.getInt(1),resultatUtilisateur.getString(2),resultatUtilisateurVente.getInt(1)));
+                    }
+                }
+            }
+        }catch(Exception ex){
+            System.out.println(ex);
+        }
+        return lesUtilisateurs;
+
+    }
+
     public static UserConnecte getUser() {
         return utilisateur;
     }
@@ -412,6 +460,21 @@ public class Requete {
             return image;
         }
     }
+
+    public static void supprimerVente(int objId){
+        try{
+            st = laConnexion.createStatement();
+            st.executeQuery("DELETE FROM ENCHERIR where idve = "+ objId +" ;");
+            st.executeQuery("DELETE FROM VENTE where idve = "+ objId+" ;");
+            st.executeQuery("DELETE FROM OBJET where idob = "+ objId+" ;");
+
+        }catch (Exception e) {
+            System.out.println(e);
+        }
+	}
+    public static void supprimerVente(Objet obj){
+        Requete.supprimerVente(obj.getIdObjet());
+    } 
 
     public static String getNomParId(int idUt) {
         try {

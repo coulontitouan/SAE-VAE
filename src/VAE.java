@@ -150,78 +150,152 @@ public class VAE extends Application {
      * Bouton qui lance page de d'inscription
      */
     private Button boutonInscription;
-
+    /**
+     * combobox des catégories dans le filtre
+     */
     private ComboBox comboCat;
 
     //attributs pour la page de connexion
 
-    private Stage stageConnexion;
 
+    /**
+     * Le stage de la page de connexion
+     */
+    private Stage stageConnexion;
+    /**
+     * permet de savoir si l'utilisateur est sur la page de connexion
+     */
     private boolean seConnecte;
 
     //attributs pour récupérer les données de la page de connexion
 
+    /**
+     * TextField qui permet de récupérer l'identifiant de l'utilisateur lors de la connexion
+     */
     private TextField textFieldIdentifiant;
-
+    /**
+     * TextField qui permet de récupérer le mot de passe de l'utilisateur lors de la connexion
+     */
     private TextField passwordFieldMotDePasse;
 
     //attributs pour ouvrir la page d'inscription
 
+    /**
+     * Le stage de la fenetre d'inscription
+     */
     private Stage stageInscription;
-
+    /**
+     * Permet de savoir si l'utilisateur est en train de s'inscrire
+     */
     private boolean sInscrit;
 
     //attributs pour récupérer les données de la page d'inscription
-
+    
+    /**
+     * un textField où l'utilisateur doit le remplire avec un nom lors de l'inscription
+     */
     private TextField TextFieldInscriptionNom;
 
+    /**
+     * un textField où l'utilisateur doit le remplire avec un prenom lors de l'inscription
+     */
     private TextField TextFieldInscriptionPrenom;
-
+    /**
+     * textField qui récupère le pseudo lors de l'inscription
+     */
     private TextField TextFieldInscriptionPseudo;
-
+    /**
+     * un textField où l'utilisateur doit le remplire avec un mot de passe lors de l'inscription
+     */
     private PasswordField TextFieldInscriptionMDP;
-
+    /**
+     * textField qui récupère le la confirmation du mot de passe lors de l'inscription
+     */
     private PasswordField TextFieldInscriptionConfirmationMDP;
-
+    /**
+     * textField qui récupère le mail lors de l'inscription
+     */
     private TextField TextFieldInscriptionMail;
-
+    /**
+     * bouton qui permet de lancer l'inscription
+     */
     private Button boutonSinscrire;
-
+    /**
+     * Permet de choisir une image
+     */
     private FileChooser fileChooserImg;
-
+    /**
+     * Ajouter un nom a l'objet pour le mettre en vente
+     */
     private TextField objetAjoutNomField;
-
+    /**
+     * Ajouter une description a l'objet pour le mettre en vente
+     */
     private TextField objetAjoutDescField;
-
+    /**
+     * Ajouter un prix initial a l'objet pour le mettre en vente
+     */
     private TextField objetAjoutPrixInitialField;
-
+    /**
+     * Ajouter un prix minimal a l'objet pour le mettre en vente
+     */
     private TextField objetAjoutPrixMinimalField;
-
+    /**
+     * Choisis la catégorie de l'objet pour le mettre en vente
+     */
     private ComboBox objetAjoutCategorieCombo;
-
+    /**
+     * Choisis la date de fin d'un enchere de l'objet pour le mettre en vente
+     */
     private DatePicker objetAjoutDateFinPicker;
-
+    /**
+     * Choisis une image pour l'enchere de l'objet pour le mettre en vente
+     */
     private ImageView objetAjoutImage;
-    
+    /**
+     * un message d'erreur lors de la connexion
+     */
     private Label messageErreurConnexion;
-
+    /**
+     * un message d'erreur lors de l'inscription
+     */
     private Label messageErreurInscription;
-
+    /**
+     * un bouton retour qui permet a l'utilisateur de revenir de la page inscription sur la page connexion 
+     */
     private Button boutonRetourInscription;
-
+    /**
+     *
+     */
     private Label typeMoney;
-
+    /**
+     *  Checkbox qui permet de vérifier que l'utilisateur a bien accepté les conditions
+     */
     private CheckBox valideAge;
-
+    /**
+     * Un bouton qui permet d'accéder a la page administrateur.
+     */
     private Button boutonAdmin;
-
+    /**
+     * Permetd de connaitre les informations de l'utilisateur qui est actuellement connecté
+     */
     private UserConnecte utilisateurConnecte;
-
+    /**
+     * Message d'erreur lors d'un ajout d'enchère
+     */
     private Label messageErreurEnchere;
-
+    /**
+     * TextField qui permet de de récupérer le montant de l'enchère à ajouter
+     */
     private TextField tfPrix;
-
+    /**
+     * VBox qui regroupe les objets associés à un utilisateur pour la fenetre administrateur
+     */
     private VBox vboxObjet;
+    /**
+     * VBox qui regroupe les utilisateurs dans la fenetre administrateur
+     */
+    private VBox usersVBox;
 
 
     /**
@@ -263,7 +337,7 @@ public class VAE extends Application {
         this.boutonRetourInscription = new Button("Retour");
         this.boutonRetourInscription.setOnAction(new ControleurRetourInscription(this));
         this.boutonAdmin = new Button("Administrateur");
-        this.boutonAdmin.setOnAction(new ControleurAdmin(this));
+        this.boutonAdmin.setOnAction(new ControleurFenetres(this));
         
         
 
@@ -324,19 +398,19 @@ public class VAE extends Application {
 
         for (Categorie categorie : Requete.obtenirCategorie()){
         	this.comboCat.getItems().add(categorie.getNom());	
-	    }
+	    }   
         this.comboCat.setValue("Toutes");
 
         this.typeMoney = new Label("€");
         this.valideAge = new CheckBox("J’ai lu et accepté les règles de\n confidencialité et confirme avoir\n plus de 18 ans.");
+        this.usersVBox = new VBox();
+
     }
 
     /**
      * @return  le graphe de scène de la vue à partir de methodes précédantes
      */
     private Scene laScene(){
-        ;
-        // this.majAffichage();
         this.panelCentral.setTop(this.banniere());
         this.panelCentral.setCenter(fenetreAccueil());
         return new Scene(this.panelCentral, 1420, 1080);
@@ -1030,180 +1104,68 @@ public class VAE extends Application {
     private Pane fenetreAdmin(){
         BorderPane res = new BorderPane();
         res.setStyle("-fx-background-color: white;");
-        //List<Objet> lesObjets = Arrays.asList(new Objet("Stylo", "Petit stylo fait maison ", new ImageView(new Image("https://raja.scene7.com/is/image/Raja/products/bic-4-couleurs-original-stylo-bille-r-tractable-pointe-moyenne-1-mm_33841-00J.jpg?template=withpicto410&$image=asset3395155&$picto=JPG_picto-vert-bas&hei=410&wid=410&fmt=jpg&qlt=85,0&resMode=sharp2&op_usm=1.75,0.3,2,0", 200, 200, true, false, false)), 3.75, new Categorie("Meubles"), 4),new Objet("Chaise", "Petites chaises faites maison par Louis Lebeaupin", new ImageView(new Image("chaise.png", 200, 200, true, false, false)), 25, new Categorie("Meubles"), 5),new Objet("Table", "Petite table faite maison par Louis Lebeaupin", new ImageView(new Image("https://media.maxiburo.fr/j2svp/zoomhd/12/54/24184.jpg", 200, 200, true, false, false)), 90, new Categorie("Meubles"), 5),new Objet("Luntette", "Petite paire de lunette faites maison par Louis Lebeaupin", new ImageView(new Image("https://lpt-prod-frames.imgix.net/WF02/WF02-BM-001.png", 200, 200, true, false, false)), 210, new Categorie("Meubles"), 0),new Objet("Chaise", "Petites chaises faites maison par Louis Lebeaupin", new ImageView(new Image("profilDeco.png", 200, 200, true, false, false)), 22, new Categorie("Meubles"), 5));
+
+        Label titreFenetreAdmin = new Label("Module administrateur");
+
+        //Partie de gauche : liste des utilisateurs
         
+        Label titrePartieUtilisateurs = new Label("Utilisateurs");
+
         VBox gauche = new VBox();
-        ScrollPane scroll = new ScrollPane();
-        scroll.setContent(gauche); 
-        HBox premier = new HBox();
-        HBox second = new HBox();
-        VBox premierdesc = new VBox();
-        VBox seconddesc = new VBox();
-        Image imgobj1 = new Image("profilDeco.png", 200, 200, true, false, false);
-        Image imgobj2 = new Image("profilDeco.png", 200, 200, true, false, false);
-        Label titre = new Label("Meilleurs ventes en cours");
-        Label obj1 = new Label("Lumpus Corpes");
-        Label obj2 = new Label("Lumpus Corpes");
-        HBox ench1 = new HBox();
-        HBox ench2 = new HBox();
-        Image note1 = new Image("jauge_5.png", 300, 100, true, false, false);
-        Image note2 = new Image("jauge_4.png", 300, 100, true, false, false);
-        Label prix1 = new Label("Prix: 250 €");                                     // REMPLACER PAR LE PRIX DES OBJETS A PARTIRE D'UNE BASE DE DONEE
-        Label prix2 = new Label("Prix: 126 €");                                     // REMPLACER PAR LE PRIX DES OBJETS A PARTIRE D'UNE BASE DE DONEE
-        prix1.setStyle("-fx-background-color: #005C83; -fx-text-fill: white; -fx-background-radius: 10px; -fx-font-size: 30px;");
-        prix2.setStyle("-fx-background-color: #005C83; -fx-text-fill: white; -fx-background-radius: 10px; -fx-font-size: 30px;");
-        Button encher1 = new Button("Enchérir");
-        encher1.getStyleClass().add("encher");
-        Button encher2 = new Button("Enchérir");
-        encher2.getStyleClass().add("encher");
-        encher2.getStyleClass().add("encher");
-        Label desc1 = new Label("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed \n do eiusmod tempor incididunt ut labore et dolore magna aliqua. \n Ut enim ad minim veniam, quis nostrud exercitation ullamco \n laboris nisi ut aliquip ex ea commodo consequat.");
-        Label desc2 = new Label("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed \n do eiusmod tempor incididunt ut labore et dolore magna aliqua. \n Ut enim ad minim veniam, quis nostrud exercitation ullamco \n laboris nisi ut aliquip ex ea commodo consequat.");
-        ench1.getChildren().addAll(prix1, encher1);
-        ench2.getChildren().addAll(prix2, encher2);
-        ench1.setMargin(prix1, new Insets(10));
-        ench1.setMargin(encher1, new Insets(10));
-        ench2.setMargin(prix2, new Insets(10));
-        ench2.setMargin(encher2, new Insets(10));
-        prix1.setPadding(new Insets(10,10,10,10)); 
-        prix2.setPadding(new Insets(10,10,10,10)); 
+        TextField barreRechercheUtilisateurAdmin = new TextField("Rechercher un utilisateur");
+        ScrollPane scrollUsers = new ScrollPane();
+        gauche.getChildren().addAll(barreRechercheUtilisateurAdmin, scrollUsers);
+        gauche.setMargin(scrollUsers, new Insets(20,20,20,20));
+        
+        for(Utilisateur user : Requete.obtenirUtilisateurs()){
+            HBox utilisateurs = new HBox();
+            Button selectionner = new Button("Visualiser");
+            selectionner.setOnAction(new ControleurSelectionnerUser(this,user));
+            selectionner.getStyleClass().add("bRecherche");
+            Button bannir = new Button("Bannir");
+            bannir.setOnAction(new ControleurBannir(this,user));
+            bannir.getStyleClass().add("bRecherche");
+            Label pseudo = new Label("Pseudo : " + user.getpseudo());
+            Label numero = new Label("Id : " + String.valueOf(user.getNum()));
+            Label nbVentes = new Label("Nombre de ventes : " + String.valueOf(user.getNbVentes()));
+            Insets insets = new Insets(5,10,5,10);
+            utilisateurs.setMargin(pseudo, insets);
+            utilisateurs.setMargin(numero, insets);
+            utilisateurs.setMargin(nbVentes, insets);
+            utilisateurs.setMargin(selectionner, insets);
+            utilisateurs.setMargin(bannir, insets);
 
-        titre.setStyle("-fx-font-size: 40px; -fx-font-weight: bold;");
-        obj1.setStyle("-fx-font-size: 30px; -fx-font-weight: bold;");
-        obj2.setStyle("-fx-font-size: 30px; -fx-font-weight: bold;");
-        premierdesc.getChildren().addAll(obj1, ench1, desc1, new ImageView(note1));
-        seconddesc.getChildren().addAll(obj2, ench2, desc2, new ImageView(note2));
-        premier.getChildren().addAll(new ImageView(imgobj1), premierdesc);
-        premier.setMargin(premierdesc, new Insets(5));
-        premierdesc.setMargin(obj1, new Insets(10));
-        premierdesc.setMargin(ench1, new Insets(10));
-        premierdesc.setMargin(desc1, new Insets(10));
-        second.getChildren().addAll(new ImageView(imgobj2), seconddesc);
-        second.setMargin(seconddesc, new Insets(10));
-        seconddesc.setMargin(obj2, new Insets(10));
-        seconddesc.setMargin(ench2, new Insets(10));
-        seconddesc.setMargin(desc2, new Insets(10));
-        // gauche.getChildren().addAll(titre, premier, second);
-        gauche.getChildren().add(titre);
-        gauche.setMargin(titre, new Insets(30));
-        gauche.setMargin(premier, new Insets(30));
-        gauche.setMargin(second, new Insets(30));
-        gauche.setMargin(titre, new Insets(30));
-
-        for (Objet obj : Requete.obtenirObjetEnVentes()){
-            HBox boxObjet = new HBox();
-            Label nomObjet = new Label(obj.getNom());
-            nomObjet.setStyle("-fx-font-size: 30px; -fx-font-weight: bold;");
-            Label descriptionObjet = new Label(obj.getDescription());
-            HBox ench = new HBox();
-            VBox objetDesc = new VBox();
-            Button boutonEncherir = new Button("Enchérir");
-            boutonEncherir.setOnAction(new ControleurFenetreVente(this));
-            boutonEncherir.getStyleClass().add("encher");
-            Label prixObjet = new Label("Prix: "+obj.getPrixActuel()+" €"); 
-            prixObjet.setStyle("-fx-background-color: #005C83; -fx-text-fill: white; -fx-background-radius: 10px; -fx-font-size: 30px;");
-            ench.getChildren().addAll(prixObjet, boutonEncherir);
-            objetDesc.getChildren().addAll(nomObjet, ench, descriptionObjet, new ImageView(new Image("jauge_"+obj.getNote()+".png")));
             
-            ImageView imageObjet = new ImageView(obj.getImageObjet());
-            imageObjet.setFitWidth(300);
-            imageObjet.setFitHeight(300);
-            boxObjet.getChildren().addAll(imageObjet, objetDesc);
-            ench.setMargin(prixObjet, new Insets(10));
-            ench.setMargin(boutonEncherir, new Insets(10));
-            boxObjet.setMargin(objetDesc, new Insets(5));
-            objetDesc.setMargin(nomObjet, new Insets(10));
-            objetDesc.setMargin(ench, new Insets(10));
-            objetDesc.setMargin(descriptionObjet, new Insets(10));
-            prixObjet.setPadding(new Insets(10,10,10,10)); 
-            gauche.getChildren().add(boxObjet);
-            gauche.setMargin(boxObjet,new Insets(30));
+            utilisateurs.getChildren().addAll(pseudo,numero,nbVentes,selectionner,bannir);
+            this.usersVBox.getChildren().add(utilisateurs);
         }
+        scrollUsers.setContent(this.usersVBox);
+        scrollUsers.setMaxWidth(500);
 
-
-        GridPane droite = new GridPane();
-        VBox vBoxFiltre = new VBox();
-        HBox categorie = new HBox();
-        ComboBox<String> comboCat = new ComboBox<>();
-        // comboCat.getItems().add("Toutes");
-        HBox prixV = new HBox();
-        VBox typeV = new VBox();
-        HBox valide = new HBox();
-        droite.setStyle("-fx-background-color: white; -fx-background-radius: 20px; -fx-border-style: solid; -fx-border-color: black; -fx-border-radius: 15px;");
-        Label filtre= new Label("Filtre");
-        filtre.setStyle("-fx-font-weight: bold;");
-        Label cate= new Label("Catégorie");
-        cate.setStyle("-fx-font-weight: bold;");
-        Label prix= new Label("Prix");
-        prix.setStyle("-fx-font-weight: bold;");
-        Label unTiret = new Label("-");            // le - entre les text field prix
-        Label euro = new Label("€");
-        Label type= new Label("Type de ventes");
-        type.setStyle("-fx-font-weight: bold;");
-        this.prixMinField = new TextField();
-        this.prixMaxField = new TextField();
-        this.prixMinField.setPromptText("0");
-        this.prixMaxField.setPromptText("250");
-        Button appliquer  = new Button("Appliquer");
-        Button reset = new Button("Réinitialiser");
-        reset.setOnAction(new ControleurReinitialiser(this));
-
-        //appliquer.setStyle("-fx-background-color: #10668a; -fx-text-fill: #FFFFFF; -fx-background-radius: 10px;");
-        appliquer.getStyleClass().add("applique");
-        reset.getStyleClass().add("reset");
-        filtre.setStyle("-fx-font-size: 40px;");
-
-
-        ToggleButton rBtn1 = new RadioButton("En cours");
-        ToggleButton rBtn2 = new RadioButton("A venir");
-        ToggleGroup rBTn = new ToggleGroup();
-        rBtn1.setToggleGroup(rBTn);
-        rBtn2.setToggleGroup(rBTn);
-
-
-        categorie.getChildren().addAll(cate,this.comboCat);
-        prixV.getChildren().addAll(prix, this.prixMinField, unTiret,this.prixMaxField, euro);
-        valide.getChildren().addAll();
-        typeV.getChildren().addAll(type, rBtn1, rBtn2);
-        vBoxFiltre.getChildren().addAll(filtre, categorie,prixV, typeV, valide);
-        droite.getChildren().add(vBoxFiltre);
-        droite.setMinSize(400,400);
-        droite.setMaxSize(400,400);
-        droite.setPrefSize(400,400);
-        valide.getChildren().addAll(reset, appliquer);
+        //Partie de droite : liste des objets de l'utilisateur séléctionné
         
-
-        vBoxFiltre.setMargin(filtre, new Insets(10));
-        vBoxFiltre.setMargin(categorie, new Insets(20));
-        vBoxFiltre.setMargin(prixV, new Insets(20));
-        vBoxFiltre.setMargin(typeV, new Insets(20));
-        vBoxFiltre.setMargin(valide, new Insets(20));
-        categorie.setMargin(this.comboCat, new Insets(0,0,0,20));
-
-        prixV.setMargin(prix,new Insets(5));
-        prixV.setMargin(unTiret,new Insets(5));
-        prixV.setMargin(euro, new Insets(5,10,0,0));
-        this.prixMinField.setMaxWidth(100);
-        this.prixMaxField.setMaxWidth(100);
-
-        typeV.setMargin(type, new Insets(0,0,10,0));
-        typeV.setMargin(rBtn1, new Insets(0,50,10,0));
-        typeV.setMargin(rBtn2, new Insets(0,50,10,0));
+        Label titrePartieObjets = new Label("Objets");
         
-        valide.setMargin(reset, new Insets(0,0,0,10));
-        valide.setMargin(appliquer, new Insets(0,0,0,80));
+        VBox droite = new VBox();
+        TextField barreRechercheObjetAdmin = new TextField("Rechercher un objet en vente");
+        ScrollPane scrollVentes = new ScrollPane();
+        scrollVentes.setMaxWidth(500);
+
+        scrollVentes.setContent(this.vboxObjet);
+        droite.getChildren().addAll(barreRechercheObjetAdmin,scrollVentes);
+
+        
         
         res.setRight(droite);
+        res.setLeft(gauche);
         gauche.setStyle("-fx-background-color: white");
-        scroll.setStyle("-fx-background-color: white");
-        gauche.setMinSize(1400,915);
-        scroll.setVbarPolicy(ScrollBarPolicy.NEVER);
-        scroll.setHbarPolicy(ScrollBarPolicy.NEVER);
-        res.setLeft(scroll);
+        //scroll.setStyle("-fx-background-color: white");
+        //scroll.setVbarPolicy(ScrollBarPolicy.NEVER);
+        //scroll.setHbarPolicy(ScrollBarPolicy.NEVER);
+        //res.setLeft(scroll);
         res.setMargin(droite, new Insets(50));
         return res;
     }
-
 
     private Pane leGraphe(){
         HBox pane = new HBox();
@@ -1320,6 +1282,26 @@ public class VAE extends Application {
         Pane pane = new Pane();
 
         return pane;
+    }
+
+    public void majAffichageUtlisateur(){
+        
+        this.usersVBox.getChildren().clear();
+        for(Utilisateur user : Requete.obtenirUtilisateurs()){
+            HBox utilisateurs = new HBox();
+            Button selectionner = new Button("Visualiser");
+            selectionner.setOnAction(new ControleurSelectionnerUser(this,user));
+            selectionner.getStyleClass().add("bRecherche");
+            Button bannir = new Button("Bannir");
+            bannir.setOnAction(new ControleurBannir(this,user));
+            bannir.getStyleClass().add("bRecherche");
+            Label pseudo = new Label(user.getpseudo());
+            Label numero = new Label(String.valueOf(user.getNum()));
+            Label nbVentes = new Label(String.valueOf(user.getNbVentes()));
+            utilisateurs.getChildren().addAll(pseudo,numero,nbVentes,selectionner,bannir);
+            this.usersVBox.getChildren().add(utilisateurs);
+
+        }
     }
     public void majAffichageObjet(List<Objet> lesObjets){
         this.vboxObjet.getChildren().clear();
